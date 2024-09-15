@@ -33,7 +33,7 @@ src/
 ├── hooks/            # Custom hooks for managing application state
 ├── context/          # Global state management using React Context API
 ├── assets/           # Static assets (images, logos, etc.)
-└── App.tsx           # Application entry point
+└── Apppassword-input.tsx           # Application entry point
 ```
 
 ## Prerequisites
