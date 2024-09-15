@@ -1,0 +1,86 @@
+/* Base Button Styles */
+.custom-button {
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+}
+
+/* Disabled State */
+.custom-button:disabled {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+}
+
+
+/* ====================================================================== */
+/* ========================== [ PRESETS ] =============================== */
+/* ====================================================================== */
+
+/* ---- Main Preset ---- */
+.custom-button.main {
+    background-color: #4a90e2;
+    color: white;
+}
+.custom-button.main:hover:not(:disabled) {
+    background-color: #3b7dc1;
+}
+
+/* ---- Dark Preset ---- */
+.custom-button.dark {
+    background-color: #333333;
+    color: white;
+}
+.custom-button.dark:hover:not(:disabled) {
+    background-color: #1a1a1a;
+}
+
+/* ---- Light Preset ---- */
+.custom-button.light {
+    background-color: #f5f5f5;
+    color: black;
+}
+.custom-button.light:hover:not(:disabled) {
+    background-color: #dddddd;
+}
+
+/* ---- Warning Preset ---- */
+.custom-button.warning {
+    background-color: #ff4d4d;
+    color: white;
+}
+.custom-button.warning:hover:not(:disabled) {
+    background-color: #e60000;
+}
+
+/* ---- Login Main Button ---- */
+.custom-button.login-main {
+    width: 100%;
+    background-color: #7A5AA2;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-button.login-main:hover:not(:disabled) {
+    background-color: #6e4a98;
+}
+
+/* ---- Login Alt Ghost Button ---- */
+.custom-button.login-alt {
+    width: 100%;
+    background-color: transparent;
+    color: #7A5AA2;
+    padding: 10px;
+    border: 2px solid #7A5AA2;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.custom-button.login-alt:hover:not(:disabled) {
+    background-color: #7A5AA2;
+    color: white;
+}
