@@ -2,8 +2,11 @@ import React from 'react';
 
 import Button, {ButtonStyle} from "../components/Button/Button";
 import ManaFall from "../components/ManaDrop/ManaDrop";
+import {useNavigate} from "react-router-dom";
 
-const Home: React.FC = () => {
+const Landing: React.FC = () => {
+  const navigate = useNavigate();
+
   const styles = {
     container: {
       display: 'flex',
@@ -12,7 +15,7 @@ const Home: React.FC = () => {
       justifyContent: 'center',
       minHeight: '100vh',
     },
-    homepageContent: {
+    landingPageContent: {
       width: '100%',
       margin: '0 auto',
       textAlign: 'center' as const,
@@ -40,10 +43,11 @@ const Home: React.FC = () => {
     }
   };
 
+
   return (
     <>
       <div style={styles.container as React.CSSProperties}>
-        <div style={styles.homepageContent as React.CSSProperties}>
+        <div style={styles.landingPageContent as React.CSSProperties}>
           <h1 style={styles.title}>ManaVault</h1>
           <h2 style={styles.tagline}>Unlock the Power of Your Collection with ManaVault</h2>
           <p style={styles.description}>
@@ -54,7 +58,7 @@ const Home: React.FC = () => {
           </p>
           <Button
             label="LOGIN"
-            onClick={() => alert('Login Button Clicked')}
+            onClick={() => navigate('/login')}
             stylePreset={ButtonStyle.Main}
             style={{width: "500px"}}
           />
@@ -65,4 +69,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Landing;

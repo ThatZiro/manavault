@@ -2,23 +2,47 @@ import React, { useState } from 'react';
 import EmailInput from '../Fields/email-input';
 import PasswordInput from '../Fields/password-input';
 import Button from "../../Button/Button";
+import {usePopup} from "../../../providers/popupcontext";
+import {sighupUser} from "../../../../_lib/api/authService";
+import {storeToken} from "../../../../_lib/helpers/jwt";
+import {useNavigate} from "react-router-dom";
 
 interface SignupFormProps {
   setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword'>>;
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ setCurrentForm }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const { openPopup } = usePopup();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Add signup logic here
     if (password === confirmPassword) {
       console.log({ email, password });
     } else {
-      alert("Passwords do not match");
+      openPopup("Passwords do not match", 'Info');
+    }
+
+    try {
+      // Call your login logic here
+      const response = await sighupUser(email, password);
+      // Check the response status
+      if (response.status === 200) {
+        openPopup('Successfully logged in!', 'Success');
+
+        storeToken(response.data.token);
+        navigate('/dashboard')
+      } else if (response.status === 201) {
+        openPopup(response.data.message, 'Info');
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

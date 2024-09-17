@@ -1,10 +1,11 @@
 import AppRouter from "./presentation/routes/AppRouter";
+import {PopupProvider} from "./presentation/providers/popupcontext";
 
 function App() {
   return (
-    <div>
-      <AppRouter/>
-    </div>
+    <PopupProvider>
+      <AppRouter />
+    </PopupProvider>
   )
 }
 

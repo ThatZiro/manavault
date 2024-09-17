@@ -3,21 +3,45 @@ import EmailInput from '../Fields/email-input';
 import PasswordInput from '../Fields/password-input';
 import RememberMe from '../Fields/remember-me-input';
 import Button from "../../Button/Button";
-
+import {loginUser} from "../../../../_lib/api/authService";
+import {usePopup} from "../../../providers/popupcontext";
+import {storeToken} from "../../../../_lib/helpers/jwt";
+import {useNavigate} from "react-router-dom";
 interface LoginFormProps {
   setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword'>>;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ setCurrentForm }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (e) => {
+  const { openPopup } = usePopup();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add login logic here
-    console.log({ email, password, rememberMe });
+
+    try {
+      // Call your login logic here
+      const response = await loginUser(email, password);
+      console.log(response);
+
+      // Check the response status
+      if (response.status === 200) {
+        openPopup('Successfully logged in!', 'Success');
+        storeToken(response.data.token);
+
+        navigate('/dashboard')
+      } else if (response.status === 201) {
+        console.log(response.data.message);
+        openPopup(response.data.message, 'Info');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
 
   const styles = {
     form: {
@@ -39,7 +63,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setCurrentForm }) => {
       <RememberMe rememberMe={rememberMe} setRememberMe={setRememberMe} />
       <Button
         label={"LOG IN"}
-        onClick={() => alert("Log In Button Pressed")}
+        type="submit"
         stylePreset={"login-main"}
       />
       <div style={styles.altbuttons}>

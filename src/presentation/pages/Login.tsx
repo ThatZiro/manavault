@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import LoginForm from '../components/Form/Forms/login-form';
 import { LogoIconComponent } from '../components/Logo/logo';
 import manavaultImage from '../../assets/manavault_image.png';
 import SignupForm from '../components/Form/Forms/signup-form';
-import ForgotPasswordForm from '../components/Form/Forms/reset-password-form';
+import ForgotPasswordForm from '../components/Form/Forms/forgot-password-form';
 
 import'../components/Form/Fields/inputfield.css'
-const Login: React.FC = () => {
-  const [currentForm, setCurrentForm] = useState<'login' | 'signup' | 'forgotPassword'>('login');
+import {useNavigate} from "react-router-dom";
+import {isAuthenticated} from "../../_lib/helpers/jwt";
+import ResetPasswordForm from "../components/Form/Forms/reset-password-form";
 
+interface LoginPageProps {
+  initialForm?: 'login' | 'signup' | 'forgotPassword' | 'resetPassword';
+}
+
+const Login: React.FC<LoginPageProps> = ({ initialForm = 'login' }) => {
+  const [currentForm, setCurrentForm] = useState<'login' | 'signup' | 'forgotPassword' | 'resetPassword'>(initialForm as 'login' | 'signup' | 'forgotPassword' | 'resetPassword');
   const styles = {
     'login-page': {
       display: 'flex',
@@ -39,8 +46,17 @@ const Login: React.FC = () => {
       right: '50px',
       top: '50px',
     },
+    'error-text': {
+      color: '#bd4e4e',
+    }
   };
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(isAuthenticated()) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const renderForm = () => {
     switch (currentForm) {
@@ -50,6 +66,8 @@ const Login: React.FC = () => {
         return <SignupForm setCurrentForm={setCurrentForm} />;
       case 'forgotPassword':
         return <ForgotPasswordForm setCurrentForm={setCurrentForm} />;
+      case 'resetPassword':
+        return <ResetPasswordForm setCurrentForm={setCurrentForm}/>;
       default:
         return <LoginForm setCurrentForm={setCurrentForm} />;
     }
