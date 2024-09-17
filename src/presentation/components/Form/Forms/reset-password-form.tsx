@@ -6,7 +6,7 @@ import {usePopup} from "../../../providers/popupcontext";
 import {resetPassword} from "../../../../_lib/api/authService";
 
 interface ResetPasswordFormProps {
-  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword'>>;
+  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword' | 'resetPassword'>>;
 }
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ setCurrentForm }) => {
   const [password, setPassword] = useState('');
@@ -22,7 +22,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ setCurrentForm })
     if (!token) {
       setCurrentForm('login')
     }
-  }, [token]);
+  }, [token, setCurrentForm]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,14 +35,12 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ setCurrentForm })
     if (token) {
       try {
         const response = await resetPassword(token, password);
-        console.log(response);
-        console.log(response.status);
 
-        if(response.status === 200) {
+        if(response && response.status === 200) {
           console.log("Success")
           openPopup("Password reset successful. You can now log in with your new password.", 'Success');
           setCurrentForm('login')
-        } else if (response.status === 201) {
+        } else if (response && response.status === 201) {
           openPopup(response.data.message, 'Info');
         }
       } catch (error) {
@@ -79,7 +77,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ setCurrentForm })
       <div style={styles.buttonContainer}>
         <Button
           label="Reset My Password"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit}
           stylePreset={ButtonStyle.LoginMain}
         />
       </div>
