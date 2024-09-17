@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import EmailInput from '../Fields/email-input';
 import Button, { ButtonStyle } from '../../Button/Button';
 import {usePopup} from "../../../providers/popupcontext";
-import {useNavigate} from "react-router-dom";
 import {forgotPassword} from "../../../../_lib/api/authService";
 
 interface ForgotPasswordFormProps {
-  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword'>>;
+  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword' | 'resetPassword'>>;
 }
 
 const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ setCurrentForm }) => {
   const [email, setEmail] = useState('');
 
   const { openPopup } = usePopup();
-  const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO Add forgot password logic here
@@ -21,10 +19,10 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ setCurrentForm 
     try {
       const response = await forgotPassword(email);
 
-      if(response.status === 200) {
+      if(response && response.status === 200) {
         openPopup('Password reset link sent! please check your email.', 'Success');
         setCurrentForm('login')
-      } else if (response.status === 201) {
+      } else if (response && response.status === 201) {
         openPopup(response.data.message, 'Info');
       }
     } catch (error) {
@@ -53,7 +51,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ setCurrentForm 
       <div style={styles.buttonContainer}>
         <Button
           label="Request My Password"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit}
           stylePreset={ButtonStyle.LoginMain}
         />
         <Button

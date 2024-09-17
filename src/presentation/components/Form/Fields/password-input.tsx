@@ -1,6 +1,11 @@
 import React from 'react';
 
-const PasswordInput = ({ password, setPassword, isConfirm }) => {
+interface PasswordInputProps {
+  password: string;
+  setPassword: (password: string) => void;
+  isConfirm?: boolean;
+}
+const PasswordInput: React.FC<PasswordInputProps> = ({ password, setPassword, isConfirm = false }) => {
   return (
     <div className="input-wrapper">
       <label htmlFor={isConfirm ? "confirm-password" : "password"}>

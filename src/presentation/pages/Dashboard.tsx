@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {isAuthenticated, removeToken} from "../../_lib/helpers/jwt";
-import Button from "../components/Button/Button";
+import Button, {ButtonStyle} from "../components/Button/Button";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
       <Button
         label={"Log Out"}
         onClick={() => logoutClicked()}
-        stylePreset={"login-alt"}
+        stylePreset={ButtonStyle.LoginAlt}
         style={styles["logout-button"] as React.CSSProperties}
       />
       </div>

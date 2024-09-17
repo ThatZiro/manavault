@@ -1,6 +1,10 @@
 import React from 'react';
 
-const RememberMe = ({ rememberMe, setRememberMe }) => {
+interface RememberMeProps {
+  rememberMe: boolean;
+  setRememberMe: (rememberMe: boolean) => void;
+}
+const RememberMe: React.FC<RememberMeProps> = ({ rememberMe, setRememberMe }) => {
   return (
     <div className="remember-me-wrapper">
       <label className="checkBox">

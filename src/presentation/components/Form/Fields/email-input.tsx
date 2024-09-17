@@ -1,6 +1,10 @@
 import React from 'react';
 
-const EmailInput = ({ email, setEmail }) => {
+interface EmailInputProps {
+  email: string;
+  setEmail: (email: string) => void;
+}
+const EmailInput: React.FC<EmailInputProps> = ({ email, setEmail }) => {
   return (
     <div className="input-wrapper">
       <label htmlFor="email">Email</label>
