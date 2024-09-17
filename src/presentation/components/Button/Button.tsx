@@ -16,11 +16,13 @@ type ButtonProps = {
   disabled?: boolean;
   stylePreset?: ButtonStyle;
   style?: React.CSSProperties;
+  type?: 'submit' | 'reset' | 'button';
 };
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, stylePreset = ButtonStyle.Main, style }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, stylePreset = ButtonStyle.Main, style, type = 'button' as 'submit' | 'reset' | 'button' }) => {
   return (
     <button
+      type={type}
       className={`custom-button ${stylePreset}`}
       onClick={onClick}
       disabled={disabled}

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import EmailInput from '../Fields/email-input';
 import PasswordInput from '../Fields/password-input';
-import Button from "../../Button/Button";
+import Button, {ButtonStyle} from "../../Button/Button";
 import {usePopup} from "../../../providers/popupcontext";
 import {sighupUser} from "../../../../_lib/api/authService";
 import {storeToken} from "../../../../_lib/helpers/jwt";
 import {useNavigate} from "react-router-dom";
 
 interface SignupFormProps {
-  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword'>>;
+  setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword' | 'resetPassword'>>;
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ setCurrentForm }) => {
@@ -33,12 +33,12 @@ const SignupForm: React.FC<SignupFormProps> = ({ setCurrentForm }) => {
       // Call your login logic here
       const response = await sighupUser(email, password);
       // Check the response status
-      if (response.status === 200) {
+      if (response && response.status === 200) {
         openPopup('Successfully logged in!', 'Success');
 
         storeToken(response.data.token);
         navigate('/dashboard')
-      } else if (response.status === 201) {
+      } else if (response && response.status === 201) {
         openPopup(response.data.message, 'Info');
       }
     } catch (error) {
@@ -72,15 +72,15 @@ const SignupForm: React.FC<SignupFormProps> = ({ setCurrentForm }) => {
       <PasswordInput password={confirmPassword} setPassword={setConfirmPassword} isConfirm={true} />
       <Button
         label={"SIGN UP"}
-        onClick={handleSubmit}
-        stylePreset={"login-main"}
+        onClick={() => handleSubmit}
+        stylePreset={ButtonStyle.LoginMain}
       />
       <div style={styles.altbuttons}>
         <p style={styles.tagline}>Already have an account?</p>
         <Button
           label={"LOG IN"}
           onClick={() => setCurrentForm("login")}
-          stylePreset={"login-alt"}
+          stylePreset={ButtonStyle.LoginAlt}
         />
       </div>
     </form>
