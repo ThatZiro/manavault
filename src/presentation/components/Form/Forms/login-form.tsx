@@ -57,7 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setCurrentForm }) => {
       <PasswordInput password={password} setPassword={setPassword} />
       <RememberMe rememberMe={rememberMe} setRememberMe={setRememberMe} />
       <Button
-        label={"LOG INN"}
+        label={"LOG IN"}
         buttonType={"submit"}
         stylePreset={ButtonStyle.LoginMain}
       />
