@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import EmailInput from '../Fields/email-input';
 import PasswordInput from '../Fields/password-input';
 import RememberMe from '../Fields/remember-me-input';
-import Button, {ButtonStyle} from "../../Button/Button";
-import {loginUser} from "../../../../_lib/api/authService";
-import {usePopup} from "../../../providers/popupcontext";
-import {storeToken} from "../../../../_lib/helpers/jwt";
-import {useNavigate} from "react-router-dom";
+import Button, { ButtonStyle } from "../../Button/Button";
+import { loginUser } from "../../../../_lib/api/authService";
+import { usePopup } from "../../../providers/popupcontext";
+import { storeToken } from "../../../../_lib/helpers/jwt";
+import { useNavigate } from "react-router-dom";
+
 interface LoginFormProps {
   setCurrentForm: React.Dispatch<React.SetStateAction<'login' | 'signup' | 'forgotPassword' | 'resetPassword'>>;
 }
@@ -20,20 +21,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ setCurrentForm }) => {
   const { openPopup } = usePopup();
 
   const handleSubmit = async () => {
-    // e.preventDefault();
 
     try {
-      // Call your login logic here
       const response = await loginUser(email, password);
-      console.log(response);
 
-      // Check the response status
       if (response && response.status === 200) {
         openPopup('Successfully logged in!', 'Success');
         storeToken(response.data.token);
-
-        navigate('/dashboard')
-      } else if (response &&  response.status === 201) {
+        navigate('/dashboard');
+      } else if (response && response.status === 201) {
         console.log(response.data.message);
         openPopup(response.data.message, 'Info');
       }
@@ -42,18 +38,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ setCurrentForm }) => {
     }
   };
 
-
   const styles = {
     form: {
       width: '80%',
       maxWidth: '500px'
     },
     altbuttons: {
-      display : "flex",
+      display: "flex",
       marginTop: "50px",
       gap: "5px",
     },
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
@@ -62,10 +57,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ setCurrentForm }) => {
       <PasswordInput password={password} setPassword={setPassword} />
       <RememberMe rememberMe={rememberMe} setRememberMe={setRememberMe} />
       <Button
-        label={"LOG IN"}
-        type="submit"
+        label={"LOG INN"}
+        buttonType={"submit"}
         stylePreset={ButtonStyle.LoginMain}
-        onClick={() => handleSubmit()}
       />
       <div style={styles.altbuttons}>
         <Button

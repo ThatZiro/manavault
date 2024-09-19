@@ -12,17 +12,17 @@ enum ButtonStyle {
 
 type ButtonProps = {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   stylePreset?: ButtonStyle;
   style?: React.CSSProperties;
-  type?: 'submit' | 'reset' | 'button';
+  buttonType?: 'submit' | 'reset' | 'button';
 };
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, stylePreset = ButtonStyle.Main, style, type = 'button' as 'submit' | 'reset' | 'button' }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, stylePreset = ButtonStyle.Main, style, buttonType = 'button' as 'submit' | 'reset' | 'button' }) => {
   return (
     <button
-      type={type}
+      type={buttonType}
       className={`custom-button ${stylePreset}`}
       onClick={onClick}
       disabled={disabled}

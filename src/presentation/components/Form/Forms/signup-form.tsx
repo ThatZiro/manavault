@@ -72,7 +72,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ setCurrentForm }) => {
       <PasswordInput password={confirmPassword} setPassword={setConfirmPassword} isConfirm={true} />
       <Button
         label={"SIGN UP"}
-        onClick={() => handleSubmit}
+        buttonType={"submit"}
         stylePreset={ButtonStyle.LoginMain}
       />
       <div style={styles.altbuttons}>
